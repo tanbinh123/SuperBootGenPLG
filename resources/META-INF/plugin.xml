@@ -1,0 +1,51 @@
+<idea-plugin>
+    <id>com.your.company.unique.plugin.id</id>
+    <name>SuperBootGenPLG</name>
+    <version>1.0</version>
+    <vendor email="1014757104@qq.com">all by myself com.ssx</vendor>
+
+    <description><![CDATA[
+      <p>SuperBootGenPLG [chain-gen]</p>
+      <hr>
+      <p>CreateNewSpringBootModule</p>
+      <p>- we don't wanna suffer again&again</p>
+      <br>
+      <br>
+    ]]></description>
+
+    <change-notes><![CDATA[
+      <br>
+      凑足多少个字才不会报错?
+      <br>
+      V20210728: 用的不爽？直接二开！
+      <br>
+      <br>
+      有事请不要联系小沈
+      <br>
+      ]]>
+    </change-notes>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="173.0"/>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <group id="SuperBootGenActionGroup"
+               keep-content="false"
+               popup="true"
+               class="com.ssx.SuperBootGenPLG"
+               text="SuperBootGenPLG">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="after"
+                          relative-to-action="ProjectViewPopupMenuRefactoringGroup"/>
+        </group>
+    </actions>
+
+</idea-plugin>
