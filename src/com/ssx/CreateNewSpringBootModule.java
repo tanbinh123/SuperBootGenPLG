@@ -25,17 +25,22 @@ public class CreateNewSpringBootModule extends AnAction {
             return;
         }
 
-        File file = new File(virtualFile.getPath() + File.separator + "pom.xml");
-        if (!file.exists()) {
+        File pom = new File(virtualFile.getPath() + File.separator + "pom.xml");
+        if (!pom.exists()) {
             Messages.showErrorDialog("Current dir doesn't contain pom.xml", "Invalid Parent Module");
             return;
         }
+
+
+
+
+
         Document document;
         String i_groupId, i_artifactId, i_version;
 
         try {
             SAXReader saxReader = new SAXReader();
-            document = saxReader.read(file);
+            document = saxReader.read(pom);
             document.setXMLEncoding("UTF-8");
             Element root = document.getRootElement();
 
@@ -59,7 +64,6 @@ public class CreateNewSpringBootModule extends AnAction {
                 Element version_p = parent.element("version");
                 i_version = version_p.getText();
             }
-
         } catch (Exception exception) {
             Messages.showErrorDialog("Please check pom.xml", "Error");
             return;
