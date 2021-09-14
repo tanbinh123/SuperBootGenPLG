@@ -181,7 +181,6 @@ public class CreateNewDialog extends DialogWrapper {
                 configuration.setDefaultEncoding("UTF-8");
                 configuration.setClassForTemplateLoading(CreateNewSpringBootModule.class, "/ftl");
 
-
                 Template appTemplate = configuration.getTemplate("application.ftl");
                 Map<String, String> appDataModel = new HashMap<>();
                 appDataModel.put("groupId", groupId);
@@ -236,7 +235,7 @@ public class CreateNewDialog extends DialogWrapper {
                     }
                     PomXmlPage.appendArtifactId(xml, project, artifactId);
                     if (!groupId.equals(p_groupId)) PomXmlPage.appendGroupId(xml, project, groupId);
-                    if (!version.equals(p_version)) PomXmlPage.appendGroupId(xml, project, version);
+                    if (!version.equals(p_version)) PomXmlPage.appendVersion(xml, project, version);
                     {
                         Element dependencies = xml.createElement("dependencies");
                         PomXmlPage.appendBootDependencyList(xml, dependencies, Arrays.asList("spring-boot-starter", "spring-boot-starter-test"));
