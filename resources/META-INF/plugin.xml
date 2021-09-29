@@ -1,26 +1,45 @@
 <idea-plugin>
-    <id>com.your.company.unique.plugin.id</id>
+    <id>com.fred.shen.allbymyself</id>
     <name>SuperBootGenPLG</name>
-    <version>1.0</version>
-    <vendor email="1014757104@qq.com">all by myself com.ssx</vendor>
+    <version>1.1</version>
+    <vendor email="1014757104@qq.com" url="https://github.com/zheng2k16/SuperBootGenPLG">SuperBootGenPLG</vendor>
 
     <description><![CDATA[
-      <p>SuperBootGenPLG [chain-gen]</p>
-      <hr>
-      <p>CreateNewSpringBootModule</p>
-      <p>- we don't wanna suffer again&again</p>
+      <p>Provides a netless way to create "not-only" sub-springboot-module, </p>
+      <p>associate poms'relationship automatically.</p>
       <br>
+      <p style="font: 16px">SuperBootGenPLG [chain-gen]</p>
+      <br>
+      <p>
+      <a href="https://github.com/zheng2k16/SuperBootGenPLG"style="display: inline">GitHub</a>
+       | <a href="https://github.com/zheng2k16/SuperBootGenPLG/issues" style="display: inline">Issues</a>
+      </p>
+      <p style="color: yellow">- maven based version</p>
+      <p>- TODO: more extensibility</p>
+      <hr>
+      <u style="color: green">CreateNewSpringBootModule</u>
+      <p>- provide the way to create sub-springboot-module without spring.io</p>
+      <p>- automatically associate poms'relationship between targeted parent & new sub module</p>
+      <p>- support mybatis plus CodeGen template</p>
+      <img src="https://user-images.githubusercontent.com/87814358/130281607-8d03bbf2-aab9-4883-b3d3-daef98ce6ada.png" width="450" height="280">
+      <br>
+      <img src="https://user-images.githubusercontent.com/87814358/135255546-27bf824f-fb8e-4c6f-82c1-3a7b40ae6532.png" width="450" height="220">
       <br>
     ]]></description>
 
     <change-notes><![CDATA[
       <br>
-      凑足多少个字才不会报错?
-      <br>
-      V20210728: 用的不爽？直接二开！
+      - we don't wanna suffer again&again
       <br>
       <br>
-      有事请不要联系小沈
+      <p>V20210929：add more option [package, yml_or_prop,   folders]</p>
+      <p>V20210911：update ui & git test</p>
+      <p>V20210728：用的不爽？直接二开！init version</p>
+      <br>
+      <br>
+      Feel free to email me. Yours 小沈.
+      <br>
+      At last appreciate to my teacher <u>@邓老师</u> ~^.^~
       <br>
       ]]>
     </change-notes>
