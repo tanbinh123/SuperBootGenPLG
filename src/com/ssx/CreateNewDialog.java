@@ -76,9 +76,11 @@ public class CreateNewDialog extends DialogWrapper {
     }
     @Override
     protected JComponent createCenterPanel() {
-        center.setLayout(new GridLayout(5,2));
+        center.setLayout(new GridLayout(7,2));
         JLabel al = new JLabel("artifactId:");
         JTextField artifactId = new JTextField();
+        JLabel pl = new JLabel("package:");
+        JTextField packageId = new JTextField(p_groupId);
         JLabel gl = new JLabel("groupId:");
         JTextField groupId = new JTextField(p_groupId);
         JLabel vl = new JLabel("version:");
@@ -87,6 +89,9 @@ public class CreateNewDialog extends DialogWrapper {
         JCheckBox mybatisPlusGen = new JCheckBox("MybatisPlusGen",false);
         JLabel dl = new JLabel("dataSourcePrefix:");
         JTextField dataSourcePrefix = new JTextField("spring.datasource");
+
+        JCheckBox banFolders = new JCheckBox("Don't create test and pst folders",false);
+        JCheckBox properties = new JCheckBox("Prefer .properties type",false);
         {
             // dataSourcePrefix 默认禁用
             dataSourcePrefix.setEnabled(false);
@@ -100,6 +105,10 @@ public class CreateNewDialog extends DialogWrapper {
 
         center.add(al);
         center.add(artifactId);
+
+        center.add(pl);
+        center.add(packageId);
+
         center.add(gl);
         center.add(groupId);
         center.add(vl);
@@ -108,6 +117,9 @@ public class CreateNewDialog extends DialogWrapper {
         center.add(mybatisPlusGen);
         center.add(dl);
         center.add(dataSourcePrefix);
+
+        center.add(banFolders);
+        center.add(properties);
 
         center.setVisible(true);
         return center;
@@ -130,17 +142,26 @@ public class CreateNewDialog extends DialogWrapper {
         public void actionPerformed(ActionEvent e) {
             JTextField atf = (JTextField) center.getComponent(1);
             String artifactId = atf.getText().trim();
-            JTextField gtf = (JTextField) center.getComponent(3);
+            JTextField ptf = (JTextField) center.getComponent(3);
+            String packageId = ptf.getText().trim();
+
+            JTextField gtf = (JTextField) center.getComponent(5);
             String groupId = gtf.getText().trim();
-            JTextField vtf = (JTextField) center.getComponent(5);
+            JTextField vtf = (JTextField) center.getComponent(7);
             String version = vtf.getText().trim();
-            JCheckBox mvn = (JCheckBox) center.getComponent(6);
+            JCheckBox mvn = (JCheckBox) center.getComponent(8);
             boolean mavenBuildPluginSupport = mvn.isSelected();
-            JCheckBox mpg = (JCheckBox) center.getComponent(7);
+            JCheckBox mpg = (JCheckBox) center.getComponent(9);
             boolean mybatisPlusGenSupport = mpg.isSelected();
 
-            JTextField dtf = (JTextField) center.getComponent(9);
+            JTextField dtf = (JTextField) center.getComponent(11);
             String dataSourcePrefix = dtf.getText().trim();
+
+            JCheckBox banFolders = (JCheckBox) center.getComponent(12);
+            boolean banFoldersSupport = banFolders.isSelected();
+            JCheckBox properties = (JCheckBox) center.getComponent(13);
+            boolean propertiesSupport = properties.isSelected();
+
             if (!dataSourcePrefix.endsWith("."))dataSourcePrefix+=".";
 
             if ("".equals(artifactId) || "".equals(groupId) || "".equals(version)) {
@@ -160,22 +181,29 @@ public class CreateNewDialog extends DialogWrapper {
             try {
                 subDir.mkdir();
                 // TODO: error handle
-                File appDir = new File(subDir + "/src/main/java/" + groupId.replace(".","/"));
-                File testDir = new File(subDir + "/src/test/java/" + groupId.replace(".","/"));
+                File appDir = new File(subDir + "/src/main/java/" + packageId.replace(".","/"));
+                File testDir = new File(subDir + "/src/test/java/" + packageId.replace(".","/"));
                 File appResourcesDir = new File(subDir + "/src/main/resources");
+                /* */
                 appDir.mkdirs();
-                testDir.mkdirs();
+                /* */
+                if (!banFoldersSupport) testDir.mkdirs();
+                /* */
                 appResourcesDir.mkdirs();
-                File publicDir = new File(appResourcesDir + File.separator + "public");
-                File staticDir = new File(appResourcesDir + File.separator + "static");
-                File templatesDir = new File(appResourcesDir + File.separator + "templates");
-                publicDir.mkdir();
-                staticDir.mkdir();
-                templatesDir.mkdir();
+                if (!banFoldersSupport) {
+                    File publicDir = new File(appResourcesDir + File.separator + "public");
+                    File staticDir = new File(appResourcesDir + File.separator + "static");
+                    File templatesDir = new File(appResourcesDir + File.separator + "templates");
+                    publicDir.mkdir();
+                    staticDir.mkdir();
+                    templatesDir.mkdir();
+                }
 
                 String appName = SuperUtils.fromArtifactIdGetName(artifactId);
                 String testName = SuperUtils.fromArtifactIdGetName(artifactId);
+
                 String appResourcesName = "application.yml";
+                if (propertiesSupport) appResourcesName = "application.properties";
 
                 Configuration configuration = new Configuration(Configuration.VERSION_2_3_28);
                 configuration.setDefaultEncoding("UTF-8");
@@ -183,28 +211,30 @@ public class CreateNewDialog extends DialogWrapper {
 
                 Template appTemplate = configuration.getTemplate("application.ftl");
                 Map<String, String> appDataModel = new HashMap<>();
-                appDataModel.put("groupId", groupId);
+                appDataModel.put("packageId", packageId);
                 appDataModel.put("ApplicationClassName", appName);
                 OutputStreamWriter appWriter = new OutputStreamWriter(new FileOutputStream(appDir + File.separator + appName + ".java"), StandardCharsets.UTF_8);
                 appTemplate.process(appDataModel, appWriter);
                 appWriter.flush();
                 appWriter.close();
 
-                Template testTemplate = configuration.getTemplate("applicationTest.ftl");
-                Map<String, String> testDataModel = new HashMap<>();
-                testDataModel.put("groupId", groupId);
-                testDataModel.put("TextClassName", testName + "Tests");
-                OutputStreamWriter testWriter = new OutputStreamWriter(new FileOutputStream(testDir + File.separator + testName + "Tests.java"), StandardCharsets.UTF_8);
-                testTemplate.process(testDataModel, testWriter);
-                testWriter.flush();
-                testWriter.close();
+                if (!banFoldersSupport) {
+                    Template testTemplate = configuration.getTemplate("applicationTest.ftl");
+                    Map<String, String> testDataModel = new HashMap<>();
+                    testDataModel.put("packageId", packageId);
+                    testDataModel.put("TextClassName", testName + "Tests");
+                    OutputStreamWriter testWriter = new OutputStreamWriter(new FileOutputStream(testDir + File.separator + testName + "Tests.java"), StandardCharsets.UTF_8);
+                    testTemplate.process(testDataModel, testWriter);
+                    testWriter.flush();
+                    testWriter.close();
+                }
 
                 new File(appResourcesDir + File.separator + appResourcesName).createNewFile();
 
                 if (mybatisPlusGenSupport) {
                     Template mpgTemplate = configuration.getTemplate("mybatisPlus.ftl");
                     Map<String, String> mpgDataModel = new HashMap<>();
-                    mpgDataModel.put("groupId", groupId);
+                    mpgDataModel.put("packageId", packageId);
                     mpgDataModel.put("dataSourcePrefix", dataSourcePrefix);
                     mpgDataModel.put("outputDir", appDir.getPath().replace("\\","/"));
                     OutputStreamWriter mpgWriter = new OutputStreamWriter(new FileOutputStream(appDir + File.separator + "SuperBootMpGen.java"), StandardCharsets.UTF_8);
@@ -256,7 +286,7 @@ public class CreateNewDialog extends DialogWrapper {
                     packaging_new.setText("pom");
                 }
                 org.dom4j.Element modules = project.element("modules");
-                if (packaging != null){
+                if (modules != null){
                     org.dom4j.Element module_new = modules.addElement("module");
                     module_new.setText(artifactId);
                 } else {
@@ -275,7 +305,7 @@ public class CreateNewDialog extends DialogWrapper {
 
                 Messages.showInfoMessage("OK","Title");
             } catch (Exception exception) {
-                Messages.showErrorDialog("Please do not contact ssx", "Error");
+                Messages.showErrorDialog("May not a springboot ", "Error");
             }
             close(-1);
         }
