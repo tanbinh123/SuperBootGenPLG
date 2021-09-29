@@ -1,4 +1,4 @@
-package ${groupId};
+package ${packageId};
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -43,7 +43,7 @@ public class SuperBootMpGen {
     // more DataSourceConfig do it yourself
 
     // packageConfig
-    private static final String packageParent = "${groupId}";
+    private static final String packageParent = "${packageId}";
     private static final String moduleName = "";
     private static final String entity = "entity";
     private static final String service = "service";
