@@ -1,11 +1,21 @@
 # SuperBootGenPLG
 > serial tools for idea with springboot
 
-📝 direct way to create sub springboot-module without spring.io involved
+📝 direct way to create sub springboot-module without spring.io involved and more
 
 - [x] still with mybatis plus optional
 - [x] friendly ui
 - [x] track parent's pom automatically
+
+---
+
+> **CreateSubSpringBootModule - for create sub springboot-module associate poms'relation automatically**
+
+> **ConvertMavenToSpringBoot - for convert init-like maven to single or agg springboot project as u like**
+
+> **ToggleApplicationBootstrap - for rename settings file especially using Spring Cloud Config**
+
+---
 
 ![0](https://user-images.githubusercontent.com/87814358/137614344-7f94bb26-57fe-4f62-bb25-e0ef2c37b1ad.png)
 
