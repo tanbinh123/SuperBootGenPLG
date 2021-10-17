@@ -101,7 +101,7 @@ public class SuperBootMpGen {
                 }
             }
         }
-        if ("".equals(autoSolveDataSourceConfigFileType)) throw new RuntimeException("no dataSource configuration, please check sbg-mpg.properties");
+        if ("".equals(autoSolveDataSourceConfigFileType)) throw new RuntimeException("no dataSource configuration, please check settings file");
     }
 
     public static void main(String[] args) throws IOException {
