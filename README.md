@@ -5,8 +5,10 @@
 
 - [x] still with mybatis plus optional
 - [x] friendly ui
-- [x] track parent's pom automatically 
+- [x] track parent's pom automatically
 
-![aa1](https://user-images.githubusercontent.com/87814358/130281607-8d03bbf2-aab9-4883-b3d3-daef98ce6ada.png)
+![0](https://user-images.githubusercontent.com/87814358/137614344-7f94bb26-57fe-4f62-bb25-e0ef2c37b1ad.png)
 
-![a](https://user-images.githubusercontent.com/87814358/135255546-27bf824f-fb8e-4c6f-82c1-3a7b40ae6532.png)
+![1](https://user-images.githubusercontent.com/87814358/137614351-32e91a0c-d711-4a6b-a794-1d81457c6e96.png)
+
+![2](https://user-images.githubusercontent.com/87814358/137614354-4e8166fa-d04e-432c-a6d7-f94c60389ad6.png)
