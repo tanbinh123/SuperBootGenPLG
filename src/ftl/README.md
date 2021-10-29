@@ -36,3 +36,24 @@ ${dataSourcePrefix} | related to datasource settings in settings file
 ${dataSourcePrefix} | ${dataSourcePrefix}password=root
 ```
 
+### settingsFileProperties.ftl & settingsFileYml.ftl
+
+```properties
+${dataSourcePrefix} | ${dataSourcePrefix}driver-class-name=com.mysql.cj.jdbc.Driver
+```
+
+### pomXml.ftl
+
+```java
+${p_artifactId} | <parent><artifactId>${p_artifactId}</artifactId></parent>
+
+${p_groupId} | <parent><groupId>${p_groupId}</groupId></parent>
+
+${p_version} | <parent><version>${p_version}</version></parent>
+
+${artifactId} | <artifactId>${artifactId}</artifactId>
+
+${groupId} | <#if p_groupId != groupId><groupId>${groupId}</groupId></#if>
+
+${version} | <version>${version}</version>
+```
